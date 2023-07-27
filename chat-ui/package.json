@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
+    "@types/react-linkify": "^1.0.1",
     "date-fns": "^2.30.0",
     "link-preview-js": "^3.0.4",
     "next": "13.4.12",
