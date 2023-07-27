@@ -3,7 +3,6 @@ import React, { useRef, useEffect } from "react";
 import { StyledTextMessageSender, StyledTextMessageReviver, StyledDeleteButton, StyledMessageBox, StyledDescription, StyledRecieverMessage, StyledSenderMessage } from "./styled";
 import { format, isToday, isYesterday } from "date-fns";
 import Linkify from "react-linkify";
-import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import ArrowDropDownTwoToneIcon from '@mui/icons-material/ArrowDropDownTwoTone';
 
 interface MessageProps {
