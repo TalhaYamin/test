@@ -13,9 +13,12 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
+    "date-fns": "^2.30.0",
+    "link-preview-js": "^3.0.4",
     "next": "13.4.12",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-linkify": "^1.0.0-alpha"
   },
   "devDependencies": {
     "@types/node": "20.4.5",
@@ -24,5 +27,9 @@
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
     "typescript": "5.1.6"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-link-preview": "latest"
   }
 }

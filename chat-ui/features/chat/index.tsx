@@ -1,58 +1,58 @@
-import React, { useState, ChangeEvent } from "react";
-import { Avatar, Grid, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { StyledBox, StyledGrid, StyledMessageBox, StyledTextFieldBox, StyledTextMessage } from "./styled";
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import SendIcon from '@mui/icons-material/Send';
+import React, { useEffect, useState } from "react";
+import { StyledBox, StyledTextFieldBox } from "./styled";
+import ChatHeader from "../chatHeader";
+import { mockData } from "../../utils/mockData";
+import ChatList from "../messageBox";
+import MessageInputField from "../chatInputField";
+
+interface Message {
+    id: number;
+    type: string;
+    message: string;
+    date: Date;
+}
+
 const Chat: React.FC = () => {
-    const [message, setMessage] = useState<string>("");
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messagesList, setMessagesList] = useState<Message[]>([]);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setMessage(e.target.value);
+    useEffect(() => {
+        setMessagesList(mockData);
+    }, []);
+
+    const handleSend = (message: string) => {
+        const newMessage: Message = {
+            id: Math.random(),
+            type: "receiver",
+            message: message,
+            date: new Date(),
+        };
+        setMessagesList((prevMessages) => [...prevMessages, newMessage]);
+        localStorage.setItem(
+            "chatMessages",
+            JSON.stringify([...messagesList, newMessage])
+        );
     };
 
-    const handleSend = () => {
-        if (message.trim() !== "") {
-            setMessages([...messages, message]);
-            setMessage("");
+    const handleDelete = (index: number) => {
+        const updatedMessagesList = messagesList.filter((_, i) => i !== index);
+        setMessagesList(updatedMessagesList);
+        localStorage.setItem("chatMessages", JSON.stringify(updatedMessagesList));
+    };
+
+    useEffect(() => {
+        const chatData = localStorage.getItem("chatMessages");
+        if (chatData) {
+            setMessagesList(JSON.parse(chatData));
         }
-    };
+    }, []);
 
     return (
         <StyledBox>
-            <Box>
-                <StyledGrid container wrap="nowrap" spacing={1}>
-                    <Grid item>
-                        <Avatar>W</Avatar>
-                    </Grid>
-                    <Grid item xs zeroMinWidth>
-                        <Typography noWrap>name</Typography>
-                        <Typography noWrap>Offline. Last seen</Typography>
-                    </Grid>
-                </StyledGrid>
-            </Box>
+            <ChatHeader />
+            <ChatList mockData={messagesList} onDelete={handleDelete} />
             <StyledTextFieldBox>
-                <TextField
-                    variant="outlined"
-                    placeholder="Type your message here"
-                    fullWidth
-                    value={message}
-                    onChange={handleInputChange}
-                />
-                <IconButton color="primary" aria-label="send message" onClick={handleSend}>
-                    <SendIcon />
-                </IconButton>
+                <MessageInputField onSend={handleSend} />
             </StyledTextFieldBox>
-
-            <StyledMessageBox>
-                {messages.map((msg, index) => (
-                    <div key={index}>
-                        <StyledTextMessage>{msg}</StyledTextMessage>
-                    </div>
-                ))}
-            </StyledMessageBox>
         </StyledBox>
     );
 };
