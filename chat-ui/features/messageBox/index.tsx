@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 import { StyledTextMessageSender, StyledTextMessageReviver, StyledDeleteButton, StyledMessageBox, StyledDescription, StyledRecieverMessage, StyledSenderMessage } from "./styled";
 import { format, isToday, isYesterday } from "date-fns";
 import Linkify from "react-linkify";
-import ArrowDropDownTwoToneIcon from '@mui/icons-material/ArrowDropDownTwoTone';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 
 interface MessageProps {
     mockData: any[];
@@ -60,15 +60,15 @@ const ChatList: React.FC<MessageProps> = ({ mockData, onDelete }) => {
             {Object.entries(groupedMessages).map(([date, messages]) => (
                 <React.Fragment key={date}>
                     <Typography textAlign={"center"} color="lightgray">{date}</Typography>
-                    {messages.map((msg: any, index: any) => (
-                        <div key={index}>
+                    {messages.map((msg: any) => (
+                        <div key={msg.id}>
                             {msg.type === "sender" ? (
                                 <div>
-                                    <StyledTextMessageSender >
+                                    <StyledTextMessageSender>
                                         <StyledSenderMessage>
                                             <Linkify>{msg.message}</Linkify>
                                         </StyledSenderMessage>
-                                        <ArrowDropDownTwoToneIcon sx={{ fontSize: "10px", color: "grey" }} onClick={() => handleDelete(index)} />
+                                        <DeleteOutlineTwoToneIcon sx={{ fontSize: "15px", color: "grey" }} onClick={() => onDelete(msg.id)} />
                                     </StyledTextMessageSender>
                                     <Typography fontSize={12} color={"gray"} marginTop="5px">
                                         {format(new Date(msg?.date), "HH:mm a")}
@@ -80,7 +80,7 @@ const ChatList: React.FC<MessageProps> = ({ mockData, onDelete }) => {
                                         <StyledRecieverMessage>
                                             <Linkify>{msg.message}</Linkify>
                                         </StyledRecieverMessage>
-                                        <ArrowDropDownTwoToneIcon sx={{ fontSize: "10px", color: "grey" }} onClick={() => handleDelete(index)} />
+                                        <DeleteOutlineTwoToneIcon sx={{ fontSize: "15px", color: "grey" }} onClick={() => onDelete(msg.id)} />
                                     </StyledTextMessageReviver>
                                     <StyledDescription>
                                         <Typography fontSize={12} color={"gray"}>

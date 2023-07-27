@@ -33,8 +33,8 @@ const Chat: React.FC = () => {
         );
     };
 
-    const handleDelete = (index: number) => {
-        const updatedMessagesList = messagesList.filter((_, i) => i !== index);
+    const handleDelete = (id: number) => {
+        const updatedMessagesList = messagesList.filter((message) => message.id !== id);
         setMessagesList(updatedMessagesList);
         localStorage.setItem("chatMessages", JSON.stringify(updatedMessagesList));
     };
